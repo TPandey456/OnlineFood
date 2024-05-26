@@ -42,10 +42,10 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    RESTAURANT=1
+    VENDOR=1
     CUSTOMER=2
     Role_choice=(
-        (  RESTAURANT,  'RESTAURANT'),
+        ( VENDOR,  'RESTAURANT'),
         (CUSTOMER,'CUSTOMER'),
     )
     first_name=models.CharField(max_length=50)
@@ -71,10 +71,8 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS=['username','first_name','last_name']
     
     objects=UserManager()
-    # usermanager to use on this model
 
-
-    #string representation of this model 
+    
     def __str__(self):
         return self.email 
     

@@ -44,16 +44,16 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     VENDOR=1
     CUSTOMER=2
-    Role_choice=(
-        ( VENDOR,  'RESTAURANT'),
-        (CUSTOMER,'CUSTOMER'),
+    ROLE_CHOICE=(
+        (VENDOR, 'Vendor'),
+        (CUSTOMER,'Customer'),
     )
     first_name=models.CharField(max_length=50)
     last_name=models.CharField(max_length=50)
     username=models.CharField(max_length=50,unique=True)
     email=models.EmailField(max_length=100,unique=True)
     phone_number=models.CharField(max_length=12,blank=True)
-    role=models.PositiveSmallIntegerField(choices=Role_choice,blank=True,null=True)
+    role=models.PositiveSmallIntegerField(choices=ROLE_CHOICE,blank=True,null=True)
     # three role in over project coustome rol, resturant_role, admin role
     
     #requred field
@@ -83,6 +83,14 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self,app_label):
         return True    
+    
+    def get_role(self):
+        if self.role == 1:
+            user_role = 'Vendor'
+        elif self.role == 2:
+            user_role = 'Customer'
+        return user_role
+
     
 #usermodel 
 

@@ -1,0 +1,16 @@
+{% autoescape off %}
+
+Hii {{user.first_name}},
+
+Please click on below link to confirm your registeration.
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape  %} 
+
+
+<!-- 127.0.0.1:8000- domain 
+MTM-uid
+activate-activation url -->
+
+<!-- so this autoescape off simply means that we trust  thae values from where they are coming
+also means that u are safe against the cross site scripting otherwise it's secutiy hole --> -->

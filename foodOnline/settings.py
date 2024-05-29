@@ -1,6 +1,9 @@
 from pathlib import Path
 from decouple import config
 
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,10 +15,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG',cast=bool)
+# DEBUG = config('DEBUG',cast=bool)
 
-ALLOWED_HOSTS = []
 
+#changes
+DEBUG = True
+ALLOWED_HOSTS = ['127.0.0.1']
+
+
+#changes
+# ALLOWED_HOSTS = ['IP', 'subdomain.domain.com']
+CORS_ORIGIN_WHITELIST = ("localhost:8080","127.0.0.1:8080")
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8080 1", "http://*.127.0.0.1", "http://127.0.0.1:8080"]
 
 # Application definition
 
@@ -26,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'accounts',
     'vendor'
 ]
@@ -105,8 +118,9 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_L10N = True
 
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -132,3 +146,10 @@ MESSAGE_TAGS= {
     messages.ERROR:'danger',
 
 }   
+
+EMAIL_HOST=config('EMAIL_HOST')
+EMAIL_PORT=config('EMAIL_PORT',cast=int)
+EMAIL_HOST_USER=config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL='foodonline Marketplace <foodonline456@gmail.com>'

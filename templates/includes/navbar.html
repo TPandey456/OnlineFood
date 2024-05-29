@@ -9,7 +9,7 @@
                         <div class="logo">
                             <figure>
                                 <a href="{% url 'home' %}" class="light-logo">
-                                    <img src="{% static 'extra-images/main-logo.png '%}" alt="FoodBakery">
+                                    <img src="{% static 'extra-images/sticky-logo'%}" alt="FoodBakery">
                                 </a>
                             </figure>
                         </div>
@@ -37,7 +37,7 @@
                             </a>
                             <a class="cs-color cs-popup-joinus-btn login-popup text-danger"
                                 href="{% url 'logout' %}">Logout </a>
-                            {% else %}
+                                {% else %}
                             <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'login' %}">Login </a>/
                             <span><a href="{% url 'registerUser' %}"
                                     class="cs-color cs-popup-joinus-btn login-popup ml-0">Register</a></span><a

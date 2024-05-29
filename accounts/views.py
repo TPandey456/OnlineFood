@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 
-
+from vendor.models import Vendor
 #if vendor accessing customer page 
 
 #user passes test decorator should triggered just below the
@@ -62,7 +62,7 @@ def registerUser(request):
 def registerVendor(request):
     if request.user.is_authenticated:
         messages.warning(request,"You are already logged in!")
-        return redirect('dashboard')
+        return redirect('myaccount')
     elif request.method == "POST":
         fm= UserForm(request.POST)
         v_fm=vendorForm(request.POST, request.FILES)
@@ -157,8 +157,6 @@ def vendorDashboard(request):
     return render(request,'accounts/vendorDashboard.html')
 
 
-
-
 def forgot_password(request):
     if request.method == "POST":
         email=request.POST['email']; """ user enter mail we need exact """
@@ -201,11 +199,8 @@ def rest_password(request):
     if request.method == 'POST':
         password=request.POST['password']
         confirm_password=request.POST['confirm_password']
-# y jo hme list k andr password or con_pass likhe hai y jo reset_passs html dile hai usme input m jo name hai vo h
 
         if password == confirm_password:
-# so here question is which user we want to reset the password that's y we put primary key inside the the request.session so primary 
-# key iside the session veriable and session variable name is uid
             pk=request.session.get('uid')
             user=User.objects.get(pk=pk)
             user.set_password(password)

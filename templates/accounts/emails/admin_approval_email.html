@@ -1,0 +1,23 @@
+{% autoescape off %}
+
+Hii {{user.first_name}},
+
+{% if is_approved %}
+
+<h4>We are delighted to inform you that your restaurant registration with FoodOnline has been successfully approved by
+    our
+    admin team. This means that your establishment is now officially part of our platform, ready to showcase your
+    culinary
+    delights to our customers.</h4>
+
+{% else %}
+<h4>We regret to inform you that your restaurant registration with FoodOnline has not been approved at this time.
+    Unfortunately, you do not meet the eligibility criteria required for registration.
+    For further details regarding this decision or to inquire about the specific reasons for your ineligibility, we
+    encourage you to reach out to our admin support team at support@foodOnline.com. They will be more than happy to
+    provide
+    you with any necessary clarification and assistance.</h4>
+{% endif%}
+
+
+{% endautoescape %}

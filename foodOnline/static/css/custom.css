@@ -13,3 +13,9 @@ animation-name: show-test;
 animation-duration: 10s;
 z-index: 90;
 }
+.btn .btn-info{
+    padding:2px 1.75em;
+    font-size: 12px;
+    cursor: pointer;
+}
+

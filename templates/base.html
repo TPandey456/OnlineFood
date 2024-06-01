@@ -17,40 +17,52 @@
 	<link href="{% static 'css/style.css' %}" rel="stylesheet">
 	<link href="{% static 'css/cs-foodbakery-plugin.css' %}" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js">
 	<link href="{% static 'css/bootstrap-slider.css' %}" rel="stylesheet">
 
-	 <!-- font awesome -->
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-	
+	<!-- font awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 	<!-- JAVASCRIPT -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="{% static 'js/modernizr.js' %}"></script>
 	<script src="{% static 'js/bootstrap.js' %}"></script>
 
-	
+
 	<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+	
+	<script	
+		src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete"
+		async defer></script>
+		<script src="{% static 'js/custom.js' %}"></script>
+
+
 
 	<style>
-		body, .main-section p, .mce-content-body p{
-			font:Normal  14px/24px "Open Sans", sans-serif;letter-spacing: 0px;text-transform: none;color: #515151 !important;
+		body,
+		.main-section p,
+		.mce-content-body p {
+			font: Normal 14px/24px "Open Sans", sans-serif;
+			letter-spacing: 0px;
+			text-transform: none;
+			color: #515151 !important;
 		}
 	</style>
 </head>
 
 <body>
 
-<!-- navbar -->
-{% include 'includes/navbar.html' %}
+	<!-- navbar -->
+	{% include 'includes/navbar.html' %}
 
-<!-- content -->
-{% block content %}
-  <!-- write content here -->
-{% endblock content %}
+	<!-- content -->
+	{% block content %}
+	<!-- write content here -->
+	{% endblock content %}
 
-<!-- footer -->
+	<!-- footer -->
 
-{% include 'includes/footer.html' %}
-	
+	{% include 'includes/footer.html' %}
 
-<!-- include is just for including the html file -->
+
+	<!-- include is just for including the html file -->

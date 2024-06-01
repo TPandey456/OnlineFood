@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 import os
 
 def allow_image_only(value):
-    ext=os.path.splitext(value.name)[1] # cover-image.jpg  means 0->cover-image and 1->jpg 
+    ext=os.path.splitext(value.name)[1] ;# cover-image.jpg  means 0->cover-image and 1->jpg 
     print(ext)
     valid_extensions =['.png','.jpg','.jpeg']
     if not ext.lower in valid_extensions:

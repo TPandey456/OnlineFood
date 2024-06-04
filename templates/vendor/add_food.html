@@ -26,29 +26,52 @@
                                 <hr>
                               
                                 <a href="{% url 'menu_builder'%}" class=" btn btn-warning float-right"><i class="fa-solid fa-arrow-left"></i>&nbsp; Back</a>
-                                <h6>Add New Category</h6>
+                                <h6>Add New FoodItem</h6>
                                 <!-- render form -->
-
-
-                                <form action="{% url 'add_Category'%}" method="POST">
+                                <form action="{% url 'add_food' %}" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
                                         <div class="form-fields-set">
-                                            <div class="row">
+                                            <div class="row mt-5">
                                                 <div class="col-lg-12 col-sm-12 col-md-12">
                                                     <div class="field-holder">
-                                                        <label>Category Name *</label>
-                                                        {{form.category_name}}
+                                                        <label class="font-weight-bold">Food Title *</label>
+                                                        {{form.food_title}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="field-holder">
+                                                        <label class="font-weight-bold">Category  *</label>
+                                                        {{form.category_name    }}
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">  
                                                     <div class="field-holder">
-                                                        <label>Description</label>
+                                                        <label class="font-weight-bold">Description</label>
                                                         {{form.description}}
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-6 col-sm-12 col-md-6">  
+                                                    <div class="field-holder">
+                                                        <label class="font-weight-bold">Price *</label>
+                                                        {{form.price}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-12 col-md-6">  
+                                                    <div class="field-holder">
+                                                        <label  class="font-weight-bold">Image</label>
+                                                        {{form.image}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-sm-12 col-md-12">  
+                                                    <div class="field-holder">
+                                                        <label  class="font-weight-bold">Is available</label>
+                                                        {{form.is_avilable}}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </div> 
+                                        <!-- {{form}}  this is also a standard way--> 
 
                                         {% for field in form  %}
                                            {% if field.errors %}

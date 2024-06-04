@@ -8,4 +8,4 @@ def allow_image_only(value):
     if not ext.lower in valid_extensions:
         raise ValidationError("Unsupported file extensions .Allowed extensions: "+str(valid_extensions))
     
-# so here str(valid...) means we concate the valid extension in message 
+# so here str(valid...) means we concate the valid extension in message b

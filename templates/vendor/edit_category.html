@@ -57,6 +57,8 @@
                                         {%  endfor  %}
 
                                      <button class="btn btn-info" type="submit"><i class="fa-solid fa-check"></i> &nbsp; Update</button>
+                                     <a href="{url 'delete_category' category.id}" onclick="return confirm('Confirm deletion of this category? ') "class="btn btn-danger"><i
+                                        class="fa-solid fa-trash text-danger"></i>Delete</a>
                                 </form>
 
 

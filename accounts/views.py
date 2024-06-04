@@ -10,7 +10,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
-
+from django.template.defaultfilters import slugify
 from vendor.models import Vendor
 #if vendor accessing customer page 
 
@@ -48,6 +48,7 @@ def registerUser(request):
             
             mail_subject="Please activate your account! "
             email_template="accounts/emails/account_verify_email.html"
+
             send_verification_email(request,user,mail_subject,email_template)
             # this work dynamic in in the send_verficatinon_mail in utils
 
@@ -58,12 +59,14 @@ def registerUser(request):
     else:          
         fm = UserForm()            
     return render(request, 'accounts/registerUser.html', {'form': fm})
-@csrf_exempt   
+
+# @csrf_exempt   
+
 def registerVendor(request):
     if request.user.is_authenticated:
         messages.warning(request,"You are already logged in!")
         return redirect('myaccount')
-    elif request.method == "POST":
+    if request.method == "POST":
         fm= UserForm(request.POST)
         v_fm=vendorForm(request.POST, request.FILES)
         if fm.is_valid() and v_fm.is_valid:
@@ -94,6 +97,7 @@ def registerVendor(request):
        fm=UserForm()
        v_fm=vendorForm()
     return render(request,'accounts/registerVendor.html',{'form':fm,"v_form":v_fm})
+
 
 
 def activate(request,uidb64,token):
@@ -161,7 +165,7 @@ def forgot_password(request):
     if request.method == "POST":
         email=request.POST['email']; """ user enter mail we need exact """
         
-        if User .objects. filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             user=User.objects.get(email__exact=email)
 
             mail_subject ="Rest Your Password"

@@ -1,12 +1,13 @@
 from django import forms 
 from .models import User ,userProfile
 from .validators import allow_image_only
+
 class UserForm(forms.ModelForm):
     password=forms.CharField(widget=forms.PasswordInput())
     confirm_password=forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
-        fields = ("first_name",'last_name','username','email','password')
+        fields = ["first_name",'last_name','username','email','password']
 
     def clean(self):
         cleaned_data=super(UserForm,self).clean()

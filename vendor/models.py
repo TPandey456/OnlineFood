@@ -24,7 +24,8 @@ class Vendor(models.Model):
                     mail_template="accounts/emails/admin_approval_email.html"
                     context={
                             'user':self.user,
-                            'is_approved':self.is_approved
+                            'is_approved':self.is_approved,
+                             'to_email': self.user.email,
                         } # because y same niche if else dono m use hrhe the islie 
                     if self.is_approved ==True:
                         mail_subject="Your restaurant request has been approved! "

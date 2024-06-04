@@ -1,6 +1,6 @@
 from django import forms 
 from .models import User ,userProfile
-from .validators import allow_image_only
+from .validators import  allow_only_images_validator
 
 class UserForm(forms.ModelForm):
     password=forms.CharField(widget=forms.PasswordInput())
@@ -21,8 +21,8 @@ class UserForm(forms.ModelForm):
         
 class userProfileForm(forms.ModelForm):
     address=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Enter your address','required':'required' }))
-    profile_pic=forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info'}),validators=[allow_image_only])
-    cover_pic=forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info'}),validators=[allow_image_only])
+    profile_pic=forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info'}),validators=[allow_only_images_validator])
+    cover_pic=forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info'}),validators=[allow_only_images_validator])
 
 # one way
     # latitude=forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))

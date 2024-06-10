@@ -17,7 +17,7 @@
 	<link href="{% static 'css/style.css' %}" rel="stylesheet">
 	<link href="{% static 'css/cs-foodbakery-plugin.css' %}" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js">
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"> -->
 	<link href="{% static 'css/bootstrap-slider.css' %}" rel="stylesheet">
 
 	<!-- font awesome -->
@@ -28,14 +28,17 @@
 	<script src="{% static 'js/modernizr.js' %}"></script>
 	<script src="{% static 'js/bootstrap.js' %}"></script>
 
+	<!-- swwetalert cnd link -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<link rel="stylesheet" href="{% static 'css/custom.css' %}">
 	
+	{% if '/profile/' in request.GET %}
 	<script	
 		src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete"
 		async defer></script>
-		<script src="{% static 'js/custom.js' %}"></script>
-
+	{% endif %}
+		<script src="{% static 'js/custom.js' %}"></script>	
 
 
 	<style>

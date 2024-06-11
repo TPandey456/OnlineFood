@@ -20,26 +20,31 @@ def get_vendor(request):
 @login_required(login_url='login') 
 @user_passes_test(check_role_vendor)
 def vprofile(request):
-    profile = get_object_or_404(userProfile,user=request.user)
-    vendor = get_object_or_404(Vendor,user=request.user)
+    profile = get_object_or_404(userProfile, user=request.user)
+    vendor = get_object_or_404(Vendor, user=request.user)
 
-    if request.method == "POST":
-        profile_form=userProfileForm(request.POST, request.FILES, instance=profile)
-        vendor_form=vendorForm(request.POST, request.FILES, instance=vendor)
-
+    if request.method == 'POST':
+        profile_form = userProfileForm(request.POST, request.FILES, instance=profile)
+        vendor_form = vendorForm(request.POST, request.FILES, instance=vendor)
         if profile_form.is_valid() and vendor_form.is_valid():
             profile_form.save()
             vendor_form.save()
-            messages.success(request,'Updated')
-            return redirect('v_profile')       
+            messages.success(request, 'Settings updated.')
+            return redirect('v_profile')
         else:
-            print(profile_form.errors)    
-            print(vendor_form.errors)    
+            print(profile_form.errors)
+            print(vendor_form.errors)
     else:
-        profile_form =userProfileForm(instance=profile)
+        profile_form = userProfileForm(instance = profile)
         vendor_form = vendorForm(instance=vendor)
 
-    return render(request,'vendor/vprofile.html',{'profile_form':profile_form,'vendor_form':vendor_form,'profile':profile,'vendor':vendor})
+    context = {
+        'profile_form': profile_form,
+        'vendor_form': vendor_form,
+        'profile': profile,
+        'vendor': vendor,
+    }
+    return render(request, 'vendor/vprofile.html', context)
 
 
 @login_required(login_url='login') 
@@ -63,22 +68,30 @@ def fooditems_by_category(request ,pk=None):
 
 #pk ki value url s aare hai     
 
+@login_required(login_url='login') 
+@user_passes_test(check_role_vendor)
 def add_category(request):
-    if request.method == "POST":
-        form =CategoryForm(request.POST)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
         if form.is_valid():
-            category_name=form.cleaned_data['category_name']
+            category_name = form.cleaned_data['category_name']
             category = form.save(commit=False)
-            category.vendor=get_vendor(request)
-            category.slug=slugify(category_name)
-            form.save()
-            messages.success(request,"Category added successfully! ")
+            category.vendor = get_vendor(request)
+            
+            category.save() # here the category id will be generated
+            category.slug = slugify(category_name)+'-'+str(category.id) # chicken-15
+            category.save()
+            messages.success(request, 'Category added successfully!')
             return redirect('menu_builder')
         else:
             print(form.errors)
+
     else:
-        form=CategoryForm()
-    return render(request,'vendor/add_Category.html',{'form':form})
+        form = CategoryForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'vendor/add_category.html', context)
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)

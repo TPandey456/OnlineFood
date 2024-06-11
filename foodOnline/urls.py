@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path,include
 from .import views
@@ -17,7 +16,8 @@ urlpatterns = [
     #cart url 
     path('cart/', v.cart, name='cart'),
 
-
+   #search 
+   path('search/', v.search, name='search'),
 
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

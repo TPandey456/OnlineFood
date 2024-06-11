@@ -119,4 +119,16 @@ def delete_Cart(request,cart_id):
             except:
                 return JsonResponse({'status': 'Failed', 'message': 'Cart Item does not exist!'})
         else:
-            return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
+            return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'}) 
+        
+
+def search(request):
+    address=request.GET['address']
+    latitude=request.GET['lat']
+    longitude=request.GET['lng']
+    radius=request.GET['radius']
+    r_name=request.GET['rest_name']
+    print(address,latitude,longitude,radius)
+    return render(request,'marketplace/listing.html')
+
+# note inside the httpresponse-> if we erite anyting they show in the webpage 

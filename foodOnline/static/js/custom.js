@@ -21,7 +21,7 @@ function onPlaceChanged() {
   if (!place.geometry) {
     document.getElementById("id_address").placeholder = "Start typing...";
   } else {
-    console.log("place name=>", place.name);
+    // console.log("place name=>", place.name);
   }
   // get the address components and assign them to the fields
 }
@@ -38,7 +38,7 @@ $(document).ready(function () {
       type: "GET",
       url: url,
       success: function (response) {
-        console.log(response);
+        // console.log(response);
         if (response.status == "login_required") {
           swal(response.message, "", "info").then(function () {
             window.location = "/login";
@@ -50,7 +50,7 @@ $(document).ready(function () {
           $("#qty-" + food_id).html(response.qty);
           applyCartAmounts(
             response.cart_amount["subtotal"],
-            response.cart_amount["tax"],
+            response.cart_amount["tax_dict"],
             response.cart_amount[
               "grand_total"
             ] /* yhe pr isko likhne j mtlb ki page ko refresh ni krne pdge direct update hojyege kuki y views aare hai  */
@@ -79,7 +79,7 @@ $(document).ready(function () {
       type: "GET",
       url: url,
       success: function (response) {
-        console.log(response);
+        // console.log(response);
         if (response.status == "login_required") {
           swal(response.message, "", "info").then(function () {
             window.location = "/login";
@@ -120,7 +120,7 @@ $(document).ready(function () {
       type: "GET",
       url: url,
       success: function (response) {
-        console.log(response);
+        // console.log(response);
         if (response.status == "Failed") {
           swal(response.message, "", "error");
         } else {
@@ -159,11 +159,18 @@ $(document).ready(function () {
   }
 
   //   cart amounts isko krne se hmlog total vgeere krlege
-  function applyCartAmounts(subtotal, tax, grand_total) {
+  function applyCartAmounts(subtotal, tax_dict, grand_total) {
     if (window.location.pathname == "/cart/") {
       $("#subtotal").html(subtotal);
-      $("#tax").html(tax);
       $("#total").html(grand_total);
+// 
+      for(key1 in tax_dict){
+        console.log(key1)
+        for(key2 in tax_dict[key1]){
+            console.log(tax_dict[key1][key2])
+            $('#tax-'+key1).html(tax_dict[key1][key2])
+        }
+      }
     }
   }
 
@@ -177,7 +184,7 @@ $(document).ready(function () {
     var csrf_token = $('input[name=csrfmiddlewaretoken]').val()
     var url = document.getElementById('add_hour_url').value
 
-    console.log(day, from_hour, to_hour, is_closed, csrf_token)
+    // console.log(day, from_hour, to_hour, is_closed, csrf_token)
 
     if(is_closed){
         is_closed = 'True'

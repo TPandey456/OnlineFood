@@ -20,3 +20,18 @@
     cursor: pointer;
 }
 
+table > tbody > tr> td{
+    border: none !important;
+}
+
+#opening_hours select{
+    padding: 5px 10px !important;
+    color: #eb0d0d;
+}
+button.btn.btn-success.add_hour {
+    padding: 7px 15px 7px 15px;
+}
+
+.delivery-timing ul li ul.delivery-dropdown li > a span {
+    color: #ed5f08;
+}

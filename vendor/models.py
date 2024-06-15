@@ -2,7 +2,7 @@ from django.db import models
 # from django.db.models.fields.related import ForeignKey,OneToOneField
 from accounts.models import User,userProfile
 from  accounts.utils import send_notification
-
+from datetime import date, datetime, time
 class Vendor(models.Model):
     user=models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
     user_profile= models.OneToOneField(userProfile, related_name='userprofile',on_delete=models.CASCADE)
@@ -15,6 +15,29 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.vendor_name
+    
+    def is_open(self):
+        # Check current day's opening hours.
+        today_date = date.today()
+        today = today_date.isoweekday()
+        
+        current_opening_hours = OpeningHours.objects.filter(vendor=self, day=today)
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+
+        is_open = None
+        for i in current_opening_hours:
+            if not i.is_closed:
+                start = str(datetime.strptime(i.from_hour, "%I:%M %p").time())
+                print(f" start time {start}")
+                end = str(datetime.strptime(i.to_hour, "%I:%M %p").time())
+                if current_time > start and current_time < end:
+                    is_open = True
+                    break
+                else:
+                    is_open = False
+        return is_open
+
     
     def save(self,*args,**kwargs):
         if self.pk is not None:
@@ -39,3 +62,34 @@ class Vendor(models.Model):
         return super(Vendor,self).save(*args,**kwargs)
 
     
+DAYS=[
+
+    (1,('Monday')),
+    (2,('Tuesday')),
+    (3,('Wednesday')),
+    (4,('Thursday')),
+    (5,('Friday')),
+    (6,('Saturday')),
+    (7,('Sunday')),
+]
+
+
+Hour_Of_Day= [(time(h, m).strftime('%I:%M %p'), time(h, m).strftime('%I:%M %p')) for h in range(0,24) for m in (0,30)]
+
+class OpeningHours(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    day =models.IntegerField(choices=DAYS)
+    from_hour= models.CharField(choices=Hour_Of_Day,max_length=10,blank=True)
+    to_hour=models.CharField(choices=Hour_Of_Day, max_length=10,blank=True)
+    is_closed=models.BooleanField(default=False,)
+
+
+    class Meta:
+        ordering=('day','-from_hour')
+        unique_together = ('vendor', 'day', 'from_hour', 'to_hour')
+        
+
+    def __str__(self):
+        return self.get_day_display()
+    
+   

@@ -16,8 +16,8 @@
                         <div class="company-info">
                             <div class="img-holder">
                                 <figure>
-                                    {% if vendor.user_profile.profile_picture %}
-                                    <img src="{{ vendor.user_profile.profile_picture.url }}" alt="">
+                                    {% if vendor.user_profile.profile_pic %}
+                                    <img src="{{ vendor.user_profile.profile_pic.url }}" alt="">
                                     {% else %}
                                     <img src="{% static 'images/default-profile.png' %}" alt="">
                                     {% endif %}
@@ -41,7 +41,7 @@
                                     <a href="#" class="reviews-sortby-active">
                                         <span>Today :</span>
                                         {% for i in current_opening_hours %}
-                                        <span>{% if i.is_closed %}Closed{% else %}{{ i.from_hour }} - {{ i.to_hour }}{% endif %}</span>
+                                        <span>{% if i.is_closed  %}Closed{% else %}{{ i.from_hour }} - {{ i.to_hour }}{% endif %}</span>
                                         
                                         {% endfor %}
                                         <i class="icon-chevron-small-down"></i>

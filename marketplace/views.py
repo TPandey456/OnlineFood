@@ -9,6 +9,10 @@ from .models import Cart
 from menu.models import Category, FoodItem
 from vendor.models import Vendor
 from django.db.models import Prefetch
+from vendor.models import OpeningHours
+from django.db.models import Q
+
+from datetime import date, datetime
 # Create your views here.
 
 
@@ -28,6 +32,24 @@ def vendor_detail(request,vendor_slug):
             queryset=FoodItem.objects.filter(is_avilable=True)
         )
     )
+
+    opening_hours = OpeningHours.objects.filter(vendor=vendor).order_by('day', '-from_hour')
+    
+    # Check current day's opening hours.
+    today_date = date.today()
+    today = today_date.isoweekday()
+    
+    current_opening_hours = OpeningHours.objects.filter(vendor=vendor, day=today) # current day opening hour like today is sat
+   
+
+
+
+    if request.user.is_authenticated:
+        cart_items = Cart.objects.filter(user=request.user)
+    else:
+        cart_items = None
+    print(current_opening_hours)
+
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user=request.user)
     else:
@@ -36,7 +58,8 @@ def vendor_detail(request,vendor_slug):
         'vendor': vendor,
         'categories': categories,
         'cart_items':cart_items,
-        
+        'opening_hours':  opening_hours,
+        'current_opening_hours ': current_opening_hours ,
     }
     return render(request, 'marketplace/vendor_detail.html', context)   
 
@@ -127,8 +150,16 @@ def search(request):
     latitude=request.GET['lat']
     longitude=request.GET['lng']
     radius=request.GET['radius']
-    r_name=request.GET['rest_name']
-    print(address,latitude,longitude,radius)
-    return render(request,'marketplace/listing.html')
+    keyword=request.GET['keyword']  
+    
 
-# note inside the httpresponse-> if we erite anyting they show in the webpage 
+
+    fetch_vendor_by_fooditems = FoodItem.objects.filter(food_title__icontains=keyword, is_avilable=True ).values_list('vendor',flat=True)
+
+    print(fetch_vendor_by_fooditems)
+
+    vendors =Vendor.objects.filter(Q(id__in=fetch_vendor_by_fooditems)| Q(vendor_name__icontains=keyword, is_approved=True, user__is_active=True))
+
+    vendor_count=vendors.count()
+    return render(request,'marketplace/listing.html',{'vendors':vendors, 'vendor_count':vendor_count})
+

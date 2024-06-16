@@ -30,41 +30,44 @@ def check_role_customer(user):
 
 @csrf_exempt
 def registerUser(request):
-   def registerVendor(request):
     if request.user.is_authenticated:
-        messages.warning(request,"You are already logged in!")
-        return redirect('myaccount')
-    if request.method == "POST":
-        fm= UserForm(request.POST)
-        v_fm=vendorForm(request.POST, request.FILES)
-        if fm.is_valid() and v_fm.is_valid:
-            fnm = fm.cleaned_data['first_name']
-            lnm = fm.cleaned_data['last_name']
-            em = fm.cleaned_data['email']
-            pw = fm.cleaned_data['password']
-            usernm = fm.cleaned_data['username']
-            user = User.objects.create_user(first_name=fnm, last_name=lnm, email=em, password=pw, username=usernm)
-            user.role = User.VENDOR
+        messages.warning(request, 'You are already logged in!')
+        return redirect('dashboard')
+    elif request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            # Create the user using the form
+            # password = form.cleaned_data['password']
+            # user = form.save(commit=False)
+            # user.set_password(password)
+            # user.role = User.CUSTOMER
+            # user.save()
+
+            # Create the user using create_user method
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+            user.role = User.CUSTOMER
             user.save()
-            vendor = v_fm.save(commit=False)
-            vendor.user=user
-            user_profile= userProfile.objects.get(user=user)
-            vendor.user_profile=user_profile
-            vendor.save()
 
-            mail_subject="Please activate your account! "
-            email_template="accounts/emails/account_verify_email.html"
-            send_verification_email(request,user,mail_subject,email_template)
-
-            messages.success(request,"Your account registration is complete! Please await approval.")
-            return redirect('registerVendor')   
+            # Send verification email
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verify_email.html'
+            send_verification_email(request, user, mail_subject, email_template)
+            messages.success(request, 'Your account has been registered sucessfully!')
+            return redirect('registerUser')
         else:
-            print("invalid")
-            print(fm.errors)
+            print('invalid form')
+            print(form.errors)
     else:
-       fm=UserForm()
-       v_fm=vendorForm()
-    return render(request,'accounts/registerVendor.html',{'form':fm,"v_form":v_fm})
+        form = UserForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/registerUser.html', context)
 
 # @csrf_exempt   
 
@@ -166,8 +169,8 @@ def myaccount(request):
     return redirect(redirectUrl)
 
 
-@login_required(login_url='login') 
-@user_passes_test(check_role_customer)
+# @login_required(login_url='login') 
+# @user_passes_test(check_role_customer)
 def customerDashboard(request):
     return render(request,'accounts/customerDashboard.html')
 

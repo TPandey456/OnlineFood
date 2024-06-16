@@ -169,6 +169,8 @@ $(document).ready(function () {
         for(key2 in tax_dict[key1]){
             console.log(tax_dict[key1][key2])
             $('#tax-'+key1).html(tax_dict[key1][key2])
+
+            // with the help of this we can print dynamic CGST AND SGST data
         }
       }
     }

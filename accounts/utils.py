@@ -32,6 +32,8 @@ def send_verification_email(request, user, mail_subject, email_template):
     mail.send()
 
 
+
+
 def send_notification(mail_subject, mail_template, context):
     from_email = settings.DEFAULT_FROM_EMAIL
     message = render_to_string(mail_template, context)
@@ -43,3 +45,17 @@ def send_notification(mail_subject, mail_template, context):
     mail = EmailMessage(mail_subject, message, from_email, to=to_email)
     mail.content_subtype = "html"
     mail.send()
+
+""" 
+why we use if else condtion? 
+
+so if we look at this view() ,  stored by we were atually sending email adress with to email key
+which is already a list so while sending a order confirmation email we are sending the email to only one 
+only single email adsress so this is now the string type inside the order> view.py  line 119('to_email': order.email)
+
+so the utils.py was sending emails to the list , so that's y we checking if the email address is single 
+that means if the email address is str type, then we wanted to put it into a list pass to parameter in line 45 utils.py
+if the context is not str then list part is working line 44
+
+ 
+ """

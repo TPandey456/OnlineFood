@@ -19,6 +19,13 @@ urlpatterns = [
    #search 
    path('search/', v.search, name='search'),
 
+   #checkout 
+   path('checkout/', v.checkout, name='checkout'),
+
+   #orders 
+
+   path('orders/', include('orders.urls'),)
+
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
     

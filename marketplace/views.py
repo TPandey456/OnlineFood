@@ -1,6 +1,7 @@
-from django.shortcuts import get_object_or_404, render,HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render,HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from accounts.models import userProfile
 from accounts.views import login
 
 
@@ -13,6 +14,7 @@ from vendor.models import OpeningHours
 from django.db.models import Q
 
 from datetime import date, datetime
+from orders.forms import OrferForm
 # Create your views here.
 
 
@@ -163,3 +165,33 @@ def search(request):
     vendor_count=vendors.count()
     return render(request,'marketplace/listing.html',{'vendors':vendors, 'vendor_count':vendor_count})
 
+
+@login_required(login_url='login')
+def checkout(request):
+    cart_items = Cart.objects.filter(user=request.user).order_by('created_date')
+    cart_count = cart_items.count()
+    if cart_count <= 0:
+        return redirect('marketplace')
+    
+    user_profile = userProfile.objects.get(user=request.user)
+    default_values = {
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'phone': request.user.phone_number,
+        'email': request.user.email,
+        'address': user_profile.address,
+        'country': user_profile.country,
+        'state': user_profile.state,
+        'city': user_profile.city,
+        'pin_code': user_profile.pin_code,
+    }
+    form = OrferForm(initial=default_values)
+    context = {
+        'form': form,
+        'cart_items': cart_items,
+    }
+    context={
+        'form':form,
+        'cart_items':cart_items
+    }
+    return render(request,'marketplace/checkout.html',context)

@@ -1,11 +1,22 @@
-@keyframes show-toast{
-    0% {bottom: -100%}
-    20% {bottom: 100px}
-    80% {bottom: 100px}
-    100% {bottom: -100%}
+@keyframes show-toast {
+    0% {
+        bottom: -100%
+    }
+
+    20% {
+        bottom: 100px
+    }
+
+    80% {
+        bottom: 100px
+    }
+
+    100% {
+        bottom: -100%
+    }
 }
 
-.show-notification{
+.show-notification {
     position: fixed;
     bottom: 100%;
     right: 20px;
@@ -14,24 +25,30 @@
     z-index: 99;
 }
 
-.btn{
-    padding:2px 1.75em;
+.btn {
+    padding: 2px 1.75em;
     font-size: 12px;
     cursor: pointer;
 }
 
-table > tbody > tr> td{
+table>tbody>tr>td {
     border: none !important;
 }
 
-#opening_hours select{
+#opening_hours select {
     padding: 5px 10px !important;
     color: #eb0d0d;
 }
+
 button.btn.btn-success.add_hour {
     padding: 7px 15px 7px 15px;
 }
 
-.delivery-timing ul li ul.delivery-dropdown li > a span {
+.delivery-timing ul li ul.delivery-dropdown li>a span {
     color: #ed5f08;
+}
+
+textarea,
+input[type=text] {
+    font-size: 14px;
 }

@@ -34,15 +34,9 @@
                                             <br>
                                             <div><a href="{% url 'checkout' %}" class="btn btn-outline-danger">Edit</a></div>
                                         </div>
-
-
-
                                     </div>
-
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -101,9 +95,14 @@
                                                     <span id="total">{{grand_total}}</span>
                                                 </span>
                                             </li>
+                                            {% if order.payment_method == 'PayPal' %}
                                             <!-- Paypal button  -->
                                             <div id="paypal-button-container"></div>
 
+                                            {% elif order.payment_method == 'RazorPay' %}
+                                            <button class="btn btn-danger w-100">Pay with RazroPay</button>
+
+                                            {% endif %}
 
                                         </ul>
                                     </div>

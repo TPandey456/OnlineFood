@@ -3,8 +3,6 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from accounts.models import userProfile
 from accounts.views import login
-
-
 from .context_processors import get_cart_amounts, get_cart_counter
 from .models import Cart
 from menu.models import Category, FoodItem

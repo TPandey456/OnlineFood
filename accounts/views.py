@@ -12,6 +12,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from django.template.defaultfilters import slugify
 from vendor.models import Vendor
+from orders.models import Order
 #if vendor accessing customer page 
 
 #user passes test decorator should triggered just below the
@@ -172,7 +173,14 @@ def myaccount(request):
 # @login_required(login_url='login') 
 # @user_passes_test(check_role_customer)
 def customerDashboard(request):
-    return render(request,'accounts/customerDashboard.html')
+    orders = Order.objects.filter(user=request.user,is_ordered=True)  #id_ordered means actually orederd it reflect the refresh order
+    recent_orders = orders[:5]
+    context = {
+        'orders' : orders,
+        'orders_count': orders.count(),
+        'recent_orders' : recent_orders
+    }
+    return render(request,'accounts/customerDashboard.html',context)
 
 
 @login_required(login_url='login') 
